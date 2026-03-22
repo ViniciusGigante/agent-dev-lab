@@ -1,0 +1,43 @@
+services:
+  coder-agent:
+    build:
+      context: .
+      dockerfile: agents/coder/Dockerfile
+    container_name: coder-agent
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    networks:
+      - equipe-ia
+    ports:
+      - "8001:8000"
+
+  corrector-agent:
+    build:
+      context: .
+      dockerfile: agents/corrector/Dockerfile
+    container_name: corrector-agent
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    networks:
+      - equipe-ia
+    ports:
+      - "8002:8000"
+
+  reviewer-agent:
+    build:
+      context: .
+      dockerfile: agents/reviewer/Dockerfile
+    container_name: reviewer-agent
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    networks:
+      - equipe-ia
+    ports:
+      - "8003:8000"
+
+networks:
+  equipe-ia:
+    driver: bridge
