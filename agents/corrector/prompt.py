@@ -1,14 +1,16 @@
-def getPromptAgentCorrector():
+def getPromptAgentCorrector(role):
     return [
             {
-        "role": "user",
+        "role": role,
         "content": "Content must be here, his role has not been defined yet."
         } 
    ]
 
-def CorrectorTestPrompt():
+def CorrectorTestPrompt(role):
     return [
             {
-        "content": "Code agent Test successfully, you can ask me to do some coding work now."
-        } 
+        "role": role,
+        "content": "Isto aqui é um teste, apenas responda de forma afirmativa para confirmar se a conexão,"
+        "já está funcionando, e se o prompt está sendo recebido corretamente: [True,False]"
+            }
    ]

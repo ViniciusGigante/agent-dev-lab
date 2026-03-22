@@ -1,0 +1,17 @@
+from fastapi import FastAPI 
+from prompt import getPromptAgentCoder,CoderTestPrompt
+from main import agent_coder
+
+app = FastAPI()
+
+@app.get("/health") 
+def health():
+    return {"status": "ok"}
+
+@app.post("/coder/test")
+def coder_test():
+    prompt = CoderTestPrompt("user")
+
+    result = agent_coder(prompt)
+
+    return {"result": result + "<Coder>"}
