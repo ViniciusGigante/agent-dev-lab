@@ -1,7 +1,5 @@
 import express from 'express';
-import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
+import checkHealth from './src/index.js';
 
 const app = express();
 const port = 3000;
@@ -28,6 +26,17 @@ app.get('/estado', (req, res) => {
   // retorna progresso atual
 })
 
-app.listen(port, () => {
-  console.log(`Orchestrator listening at http://localhost:${port}`);
-});
+async function main() {
+  // opcional: loop para monitorar saúde dos agentes e reiniciar se necessário
+  if(await checkHealth()) {
+    
+    app.listen(port, () => {
+    console.log(`Orchestrator listening at http://localhost:${port}`);
+  });
+
+  }else{return console.error("Algum agente não está saudável. Verifique os logs.");}
+
+}
+
+main()
+

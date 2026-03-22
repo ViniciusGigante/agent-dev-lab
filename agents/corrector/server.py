@@ -4,11 +4,11 @@ from main import agent_corrector
 
 app = FastAPI()
 
-@app.get("/corrector/health") 
+@app.get("/health") 
 def health():
     return {"status": "ok"}
 
-@app.post("/corrector/test")
+@app.post("/test")
 def coder_test():
     prompt = CorrectorTestPrompt("user")
 

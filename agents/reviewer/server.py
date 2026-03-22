@@ -4,11 +4,11 @@ from main import agent_reviewer
 
 app = FastAPI()
 
-@app.get("/reviewer/health") 
+@app.get("/health") 
 def health():
     return {"status": "ok"}
 
-@app.post("/reviewer/test")
+@app.post("/test")
 def coder_test():
     prompt = ReviewerTestPrompt("user")
 

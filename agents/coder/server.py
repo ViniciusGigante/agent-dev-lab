@@ -8,7 +8,7 @@ app = FastAPI()
 def health():
     return {"status": "ok"}
 
-@app.post("/coder/test")
+@app.post("/test")
 def coder_test():
     prompt = CoderTestPrompt("user")
 
