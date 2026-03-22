@@ -1,10 +1,28 @@
 services:
-  coder-agent:
+  orquestrator:
     build:
       context: .
-      dockerfile: agents/coder/Dockerfile
+      dockerfile: orchestrator/Dockerfile
+    container_name: orchestrator
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    networks:
+      - equipe-ia
+    ports:
+      - "3000:3000"
+
+
+  coder-agent:
+    build:
+      context: agents/coder
+      dockerfile: Dockerfile
     container_name: coder-agent
     restart: unless-stopped
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
     volumes:
       - ./data:/app/data
     networks:
@@ -14,10 +32,12 @@ services:
 
   corrector-agent:
     build:
-      context: .
-      dockerfile: agents/corrector/Dockerfile
+      context: agents/corrector
+      dockerfile: Dockerfile
     container_name: corrector-agent
     restart: unless-stopped
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
     volumes:
       - ./data:/app/data
     networks:
@@ -27,10 +47,12 @@ services:
 
   reviewer-agent:
     build:
-      context: .
-      dockerfile: agents/reviewer/Dockerfile
+      context: agents/reviewer
+      dockerfile: Dockerfile
     container_name: reviewer-agent
     restart: unless-stopped
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
     volumes:
       - ./data:/app/data
     networks:
