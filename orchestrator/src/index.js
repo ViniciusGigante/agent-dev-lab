@@ -24,3 +24,5 @@ async function checkHealth() {
         console.error("❌ Error checking health:", error)
     }
 }
+
+export default checkHealth;

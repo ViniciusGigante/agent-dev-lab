@@ -5,7 +5,7 @@ import json
 
 load_dotenv('../.env')
 
-client = Groq(os.getenv('GROQ_API_KEY'))
+client = Groq(api_key=os.getenv('GROQ_API_KEY'))
 
 def agent_corrector(prompt):
 
