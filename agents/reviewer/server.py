@@ -15,3 +15,8 @@ def reviewer_test():
     result = agent_reviewer(prompt)
 
     return {"result": result + "<Coder>"}
+
+@app.post("/test/context")
+def test_context(request: dict):
+    print(request)
+    return {"status": "ok"}

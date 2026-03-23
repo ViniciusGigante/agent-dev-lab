@@ -15,3 +15,8 @@ def coder_test():
     result = agent_coder(prompt)
 
     return {"result": result + "<Coder>"}
+
+@app.post("/test/context")
+def test_context(request: dict):
+    print(request)
+    return {"status": "ok"}

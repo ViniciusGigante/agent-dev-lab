@@ -15,3 +15,8 @@ def corrector_test():
     result = agent_corrector(prompt)
 
     return {"result": result + "<Coder>"}
+
+@app.post("/test/context")
+def test_context(request: dict):
+    print(request)
+    return {"status": "ok"}
