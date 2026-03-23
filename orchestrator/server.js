@@ -11,15 +11,6 @@ app.get('/health', async (req, res) => {
   // retorna status de todos
 })
 
-// 2. Iniciar o projeto
-// recebe { "tipo": "calculadora" } ou { "artefatos": "./caminho.json" }
-app.post('/iniciar', async (req, res) => {
-  // valida projeto
-  // verifica saúde dos agentes
-  // inicia ciclo
-  // retorna resultado
-})
-
 // 3. Consultar estado atual do projeto em andamento
 app.get('/estado', (req, res) => {
   // lê artifacts.json do volume

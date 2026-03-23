@@ -1,0 +1,81 @@
+{
+  "project": "snake",
+  "status": "não iniciado",
+  "technology": {
+    "language": "Python 3",
+    "library": "Pygame",
+    "structure": "modular"
+  },
+  "directory": "snake/",
+  "artifacts": {
+    "configuracao": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "settings": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/settings.py",
+          "exports": [],
+          "instructions": "Crie o arquivo de configurações globais do jogo Snake. Deve conter: constante LARGURA com valor 800 para largura da janela em pixels, constante ALTURA com valor 600 para altura da janela em pixels, constante TAMANHO_BLOCO com valor 20 para tamanho de cada bloco da cobra e comida em pixels, constante FPS com valor 10 para velocidade inicial do jogo, constante FPS_MAX com valor 30 para velocidade máxima após crescimento, constante TITULO com string 'Snake Game', constantes de cores em tuplas RGB: PRETO=(0,0,0) BRANCO=(255,255,255) VERDE=(0,200,0) VERDE_ESCURO=(0,150,0) VERMELHO=(200,0,0) CINZA=(40,40,40) AMARELO=(255,220,0), constante PONTOS_POR_COMIDA com valor 10, constante AUMENTO_VELOCIDADE com valor 0.5 representando quanto o FPS aumenta a cada comida comida. Não importe nada neste arquivo pois ele é importado por todos os outros."
+        }
+      }
+    },
+    "core": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "cobra": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/snake.py",
+          "exports": [],
+          "instructions": "Crie a classe Snake que representa a cobra do jogo. Deve importar pygame e as constantes de settings.py. Deve conter: método __init__(self) que inicializa a cobra com 3 blocos no centro da tela como lista de tuplas (x, y), define direcao atual como 'DIREITA', define proxima_direcao como 'DIREITA', define crescer como False, método mover(self) que move a cobra adicionando novo bloco na frente baseado na direção atual e remove o último bloco a menos que crescer seja True, método mudar_direcao(self, nova_direcao) que atualiza proxima_direcao respeitando a regra de não poder inverter direção diretamente como não ir de DIREITA para ESQUERDA, método crescer_cobra(self) que define crescer como True para o próximo movimento, método obter_cabeca(self) que retorna a tupla (x, y) do primeiro elemento da lista, método obter_corpo(self) que retorna a lista completa de tuplas, método desenhar(self, superficie) que desenha cada bloco da cobra na superfície pygame com cor VERDE para o corpo e VERDE_ESCURO para a cabeça usando pygame.draw.rect com bordas levemente arredondadas."
+        },
+        "comida": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/food.py",
+          "exports": [],
+          "instructions": "Crie a classe Food que representa a comida do jogo. Deve importar pygame, random e as constantes de settings.py. Deve conter: método __init__(self) que gera a posição inicial da comida chamando gerar_posicao, método gerar_posicao(self, corpo_cobra=[]) que gera uma posição aleatória em grade alinhada ao TAMANHO_BLOCO dentro dos limites da tela garantindo que a posição não coincida com nenhuma parte do corpo da cobra recebido como parâmetro, método obter_posicao(self) que retorna a tupla (x, y) atual da comida, método reposicionar(self, corpo_cobra) que chama gerar_posicao com o corpo atual da cobra para gerar nova posição válida, método desenhar(self, superficie) que desenha a comida na superfície pygame como um círculo ou quadrado arredondado com cor VERMELHO."
+        },
+        "colisao": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/collision.py",
+          "exports": [],
+          "instructions": "Crie funções puras para detectar colisões no jogo. Deve importar as constantes de settings.py. Deve conter: função colidiu_com_parede(cabeca) que recebe tupla (x, y) da cabeça da cobra e retorna True se a posição estiver fora dos limites da tela definidos por LARGURA e ALTURA, função colidiu_com_corpo(cabeca, corpo) que recebe a tupla da cabeça e a lista de tuplas do corpo e retorna True se a cabeça coincidir com qualquer parte do corpo excluindo a própria cabeça que é o primeiro elemento, função colidiu_com_comida(cabeca, posicao_comida) que recebe a tupla da cabeça e a tupla da posição da comida e retorna True se forem iguais, função verificar_game_over(cabeca, corpo) que chama colidiu_com_parede e colidiu_com_corpo e retorna True se qualquer uma retornar True. Exporte todas as funções."
+        }
+      }
+    },
+    "interface": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "renderizacao": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/renderer.py",
+          "exports": [],
+          "instructions": "Crie a classe Renderer responsável por desenhar tudo na tela. Deve importar pygame e as constantes de settings.py. Deve conter: método __init__(self, superficie) que recebe e armazena a superfície principal do pygame, método desenhar_fundo(self) que preenche a tela com cor PRETO e desenha a grade opcional com linhas CINZA muito sutis para referência visual, método desenhar_tudo(self, cobra, comida, pontuacao, velocidade_atual) que chama desenhar_fundo depois manda cobra e comida se desenharem na superfície e depois chama desenhar_hud, método desenhar_hud(self, pontuacao, velocidade_atual) que desenha na parte superior da tela o texto da pontuação atual e a velocidade atual com fonte pygame em cor BRANCO, método desenhar_game_over(self, pontuacao_final) que desenha a tela de game over centralizada com a pontuação final e instrução para pressionar R para reiniciar ou Q para sair, método desenhar_tela_inicial(self) que desenha uma tela inicial com o título do jogo e instrução para pressionar Enter para começar."
+        },
+        "placar": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/score.py",
+          "exports": [],
+          "instructions": "Crie a classe Score para gerenciar a pontuação e recordes do jogo. Deve importar json e os para persistência e as constantes de settings.py. Deve conter: constante ARQUIVO_RECORDE com valor 'snake/recorde.json', método __init__(self) que inicializa pontuacao como 0 e carrega o recorde salvo chamando carregar_recorde, método adicionar_pontos(self) que incrementa a pontuação em PONTOS_POR_COMIDA, método obter_pontuacao(self) que retorna a pontuação atual, método obter_recorde(self) que retorna o recorde carregado, método verificar_e_salvar_recorde(self) que compara pontuacao com recorde e salva se for maior chamando salvar_recorde e retorna True se bateu recorde, método salvar_recorde(self) que salva o recorde atual em ARQUIVO_RECORDE como JSON, método carregar_recorde(self) que lê ARQUIVO_RECORDE e retorna o valor ou 0 se o arquivo não existir, método resetar(self) que zera a pontuação para uma nova partida. Exporte a classe Score."
+        }
+      }
+    },
+    "game_loop": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "main": {
+          "done": false,
+          "attempts": 0,
+          "file": "snake/main.py",
+          "exports": [],
+          "instructions": "Crie o arquivo principal com o game loop do Snake. Deve importar pygame, sys, as classes Snake, Food, Renderer, Score e as funções de collision.py e as constantes de settings.py. Deve conter: função inicializar_pygame() que chama pygame.init() e cria a janela com LARGURA e ALTURA e define o título, função calcular_velocidade(pontuacao) que retorna o FPS atual baseado na pontuação começando em FPS e aumentando AUMENTO_VELOCIDADE a cada PONTOS_POR_COMIDA limitado a FPS_MAX, função processar_eventos(cobra) que itera pelos eventos pygame tratando QUIT para sair KEYDOWN para mudar direção da cobra com as setas ou WASD e R para reiniciar e Q para sair na tela de game over, função loop_principal() que cria instâncias de Snake Food Renderer e Score e roda o loop principal do jogo atualizando lógica verificando colisões atualizando pontuação redesenhando tela e controlando FPS com pygame.time.Clock, bloco if __name__ == '__main__' que chama loop_principal."
+        }
+      }
+    }
+  }
+}

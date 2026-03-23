@@ -1,0 +1,91 @@
+{
+  "project": "calculadora",
+  "status": "não iniciado",
+  "technology": {
+    "language": "JavaScript puro",
+    "style": "CSS + Bootstrap 5",
+    "structure": "HTML estático",
+    "tipo": "Calculadora científica"
+  },
+  "directory": "calculadora/",
+  "artifacts": {
+    "estrutura_base": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "criar_index_html": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/index.html",
+          "exports": [],
+          "instructions": "Crie o HTML base da calculadora científica. Deve conter: estrutura semântica com head e body, importação do Bootstrap 5 via CDN, importação de todos os arquivos JS da pasta js/ na ordem correta (operacoes.js, cientificas.js, erros.js, historico.js, display.js, eventos.js, main.js), importação do style.css, um div principal com id='calculadora' centralizado na tela, um display com id='display' para mostrar a expressão atual, um display secundário com id='resultado' para mostrar o resultado, uma grade de botões organizados em linhas com todos os números de 0 a 9, operadores básicos (+ - * /), operadores científicos (sin cos tan log sqrt pi), botões de ação (= C CE backspace), e botão de histórico. Cada botão deve ter data-value com seu valor e classes Bootstrap apropriadas."
+        },
+        "criar_style_css": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/style.css",
+          "exports": [],
+          "instructions": "Crie o CSS customizado da calculadora científica para complementar o Bootstrap. Deve conter: variáveis CSS para as cores principais (fundo escuro, botões, display, destaque), estilo para o container principal centralizando na viewport com altura mínima de 100vh, estilo do display com fonte monoespaçada grande para expressão e resultado, cores diferentes para botões numéricos, operadores básicos, operadores científicos e botões de ação, efeito hover e active nos botões, animação suave de transição nos botões, estilo do painel de histórico que aparece como sidebar ou dropdown, responsividade para telas menores que 480px reduzindo tamanho dos botões, tema escuro moderno como padrão visual."
+        }
+      }
+    },
+    "logica_core": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "operacoes_basicas": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/operacoes.js",
+          "exports": [],
+          "instructions": "Crie funções puras para operações matemáticas básicas. Deve conter: função somar(a, b) que retorna a soma de dois números, função subtrair(a, b) que retorna a subtração, função multiplicar(a, b) que retorna a multiplicação, função dividir(a, b) que retorna a divisão e retorna null se b for zero, função calcularExpressao(expressao) que recebe uma string com a expressão completa como '3+5*2' e calcula respeitando precedência de operadores, função formatarNumero(numero) que formata o resultado para no máximo 10 casas decimais removendo zeros desnecessários. Exporte todas as funções individualmente com export function."
+        },
+        "operacoes_cientificas": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/cientificas.js",
+          "exports": [],
+          "instructions": "Crie funções puras para operações científicas. Deve conter: função seno(angulo) que calcula o seno convertendo graus para radianos, função cosseno(angulo) que calcula o cosseno convertendo graus para radianos, função tangente(angulo) que calcula a tangente convertendo graus para radianos e retorna null se indefinido, função logaritmo(numero) que calcula log base 10 e retorna null para números menores ou iguais a zero, função logNatural(numero) que calcula ln e retorna null para números menores ou iguais a zero, função raizQuadrada(numero) que retorna a raiz quadrada e retorna null para números negativos, função potencia(base, expoente) que retorna base elevado ao expoente, função fatorial(numero) que retorna o fatorial de inteiros positivos e retorna null para negativos ou não inteiros, constante PI com o valor de Math.PI, constante E com o valor de Math.E. Exporte tudo individualmente com export."
+        },
+        "tratamento_erros": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/erros.js",
+          "exports": [],
+          "instructions": "Crie funções para tratar e exibir erros da calculadora. Deve conter: função validarEntrada(expressao) que verifica se a expressão tem parênteses balanceados, operadores consecutivos inválidos e caracteres não permitidos retornando objeto com campos valido boolean e mensagem string, função tratarResultadoInvalido(resultado) que verifica se o resultado é null, undefined, Infinity ou NaN e retorna a mensagem de erro apropriada para cada caso como 'Divisão por zero', 'Domínio inválido', 'Erro de cálculo', função formatarErro(mensagem) que formata a mensagem de erro para exibição no display com prefixo 'Erro:', função limparExpressao(expressao) que remove caracteres inválidos e corrige formatação básica da string de entrada. Exporte todas as funções individualmente com export function."
+        },
+        "historico": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/historico.js",
+          "exports": [],
+          "instructions": "Crie funções para gerenciar o histórico de cálculos usando localStorage. Deve conter: constante HISTORICO_KEY com valor 'calculadora_historico', função salvarCalculo(expressao, resultado) que salva um objeto com expressao, resultado e timestamp no localStorage limitando a 20 entradas mais recentes, função obterHistorico() que retorna array com todos os cálculos salvos ordenados do mais recente ao mais antigo, função limparHistorico() que remove todos os registros do localStorage, função formatarEntradaHistorico(entrada) que formata um item do histórico como string legível no formato 'expressao = resultado', função exportarHistorico() que retorna todos os cálculos como texto formatado para cópia. Exporte todas as funções individualmente com export function."
+        }
+      }
+    },
+    "interface": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "display": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/display.js",
+          "exports": [],
+          "instructions": "Crie funções para controlar o display da calculadora. Deve conter: função atualizarDisplay(expressao) que atualiza o elemento com id='display' com a expressão atual, função atualizarResultado(resultado) que atualiza o elemento com id='resultado' com o resultado formatado, função limparDisplay() que limpa ambos os displays definindo strings vazias, função exibirErro(mensagem) que exibe a mensagem de erro no display de resultado com classe CSS de erro, função removerUltimoCaractere(expressao) que remove o último caractere da expressão e retorna a nova string, função exibirHistoricoNaTela(itens) que renderiza os itens do histórico no elemento com id='historico-lista' criando elementos HTML para cada entrada, função toggleHistorico() que mostra ou esconde o painel de histórico alterando classe CSS do elemento com id='historico-painel'. Exporte todas as funções individualmente com export function."
+        },
+        "botoes_eventos": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/eventos.js",
+          "exports": [],
+          "instructions": "Crie funções para gerenciar eventos dos botões e teclado. Deve conter: função inicializarEventosBotoes() que adiciona event listener de click em todos os botões com data-value e chama processarClique com o valor correspondente, função processarClique(valor) que decide a ação baseado no valor recebido: se for número ou operador adiciona à expressão, se for '=' calcula, se for 'C' limpa tudo, se for 'CE' apaga último caractere, se for 'historico' abre painel, se for operador científico como 'sin' 'cos' 'tan' 'log' 'sqrt' adiciona a chamada formatada na expressão, função inicializarEventosTeclado() que mapeia teclas do teclado físico para ações da calculadora incluindo números operadores Enter para calcular Backspace para apagar e Escape para limpar, função processarTecla(evento) que recebe o evento de teclado e chama processarClique com o valor mapeado. Exporte inicializarEventosBotoes e inicializarEventosTeclado."
+        },
+        "main": {
+          "done": false,
+          "attempts": 0,
+          "file": "calculadora/js/main.js",
+          "exports": [],
+          "instructions": "Crie o arquivo principal que inicializa a calculadora e gerencia o estado global. Deve conter: variável de estado expressaoAtual iniciada como string vazia, variável modoHistorico iniciada como false, função calcular() que pega expressaoAtual valida com validarEntrada calcula com calcularExpressao trata resultado com tratarResultadoInvalido salva no histórico com salvarCalculo e atualiza o display com o resultado, função adicionarAExpressao(valor) que concatena o valor à expressaoAtual respeitando regras como não começar com operador exceto menos não ter dois operadores consecutivos e atualiza o display, função limpar() que reseta expressaoAtual para string vazia e limpa o display, função apagarUltimo() que remove o último caractere de expressaoAtual e atualiza display, função inicializar() que chama inicializarEventosBotoes e inicializarEventosTeclado e prepara a calculadora para uso, chamada de inicializar() dentro de DOMContentLoaded. Não exporte nada pois é o ponto de entrada."
+        }
+      }
+    }
+  }
+}
