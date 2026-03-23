@@ -20,3 +20,8 @@ def coder_test():
 def test_context(request: dict):
     print(request)
     return {"status": "ok"}
+
+@app.post("/work")
+def coding(request:dict):
+    print(request)
+    return {"status":"ok"}
