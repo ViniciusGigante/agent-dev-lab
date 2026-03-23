@@ -1,8 +1,8 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-async function readStates(projectFile) {
-    const basePath = "../states/"
+async function readStates(projectFile,basePath) {
+    
     const state = JSON.parse(await fs.readFile(path.join(basePath, projectFile), 'utf-8'))
 
     for (const [artifactName, artifact] of Object.entries(state.artifacts)) {

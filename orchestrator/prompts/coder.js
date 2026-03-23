@@ -1,12 +1,10 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-
-// teste
-import fs from 'fs';
+import fs from 'fs/promises'
 
 dotenv.config()
 
-async function fetchCoder(project,artefact) {
+async function fetchCoder(project, artefact) {
     const { CODER_URL } = process.env
 
     const response = await fetch(CODER_URL + "/work", {
@@ -15,10 +13,11 @@ async function fetchCoder(project,artefact) {
         body: JSON.stringify(artefact)
     })
 
-    //teste
-    fs.writeFile('../context/context.txt',response)
+    const code = await response.text()
 
-    return response;
+    await fs.writeFile('./context/context.txt', code)
+
+    return code
 }
 
 export default fetchCoder

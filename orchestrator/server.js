@@ -6,6 +6,8 @@ import fetchCoder from './prompts/coder.js';
 
 const app = express();
 const port = 3000;
+const basePath = "./states"
+
 app.use(express.json());
 
 
@@ -17,8 +19,9 @@ async function main() {
   });
 
     const projectFile = await selectProject();
-    const artefact = await readStates(projectFile); 
+    const artefact = await readStates(projectFile,basePath); 
     const prompt = await fetchCoder(projectFile,artefact)
+    console.log(prompt)
 
   }else{return console.error("Algum agente não está saudável. Verifique os logs.");}
 

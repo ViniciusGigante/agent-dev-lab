@@ -1,21 +1,21 @@
-import readline from 'readline'
+import dotenv from 'dotenv';
 
-const projetos = {
-    1: 'state_calculadora.json',
-    2: 'state_snake.json',
-    3: 'state_server.json',
-    4: 'state_todo.json',
-    5: 'state_test.json'
-}
+dotenv.config();
+
+const yourProject = parseInt(process.env.PROJECT);
 
 async function selectProject() {
-    return new Promise((resolve) => {
-        const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-        console.log("\nEscolha um projeto:\n1. Calculadora\n2. Jogo da Cobrinha\n3. Servidor CRUD\n4. Lista de Tarefas")
-        rl.question("\nDigite um número: ", (resposta) => {
-            rl.close()
-            resolve(projetos[parseInt(resposta)])
-        })
-    })
+    switch(yourProject){
+        case 1:
+            return 'state_calculadora.json'
+        case 2:
+            return 'state_snake.json'
+        case 3:
+            return 'state_server.json'
+        case 4:
+            return 'state_todo.json'
+        case 5:
+            return 'state_test.json'
+    }
 }
-export default selectProject
+export default selectProject;
