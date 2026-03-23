@@ -33,7 +33,7 @@ async function checkApiHealth() {
     }
 }
 
-async function checkAgentsHealth(agentUrl) {
+async function checkAgentsHealth() {
     try {
         const [coder, corrector, reviewer] = await Promise.all([
             fetch(CODER_URL + "/test",{method: "POST"}).then(res => res.json()),
