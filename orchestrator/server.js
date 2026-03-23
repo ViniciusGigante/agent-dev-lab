@@ -1,5 +1,5 @@
 import express from 'express';
-import checkHealth from './src/index.js';
+import { checkApiHealth, checkAgentsHealth } from './src/index.js';
 
 const app = express();
 const port = 3000;
@@ -19,7 +19,7 @@ app.get('/estado', (req, res) => {
 
 async function main() {
   // opcional: loop para monitorar saúde dos agentes e reiniciar se necessário
-  if(await checkHealth()) {
+  if(await checkApiHealth() && await checkAgentsHealth()) {
     
     app.listen(port, () => {
     console.log(`Orchestrator listening at http://localhost:${port}`);

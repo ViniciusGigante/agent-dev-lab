@@ -9,7 +9,7 @@ def health():
     return {"status": "ok"}
 
 @app.post("/test")
-def coder_test():
+def reviewer_test():
     prompt = ReviewerTestPrompt("user")
 
     result = agent_reviewer(prompt)

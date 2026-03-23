@@ -10,7 +10,6 @@ def CoderTestPrompt(role):
     return [
             {
         "role": role,
-        "content": "Isto aqui é um teste, apenas responda de forma afirmativa para confirmar se a conexão,"
-        "já está funcionando, e se o prompt está sendo recebido corretamente: [True,False]"
+        "content": "Isto é um teste de conexão, responda apenas True se isto chegou em você. Sem pegadinhas por gentileza."
             }
    ]

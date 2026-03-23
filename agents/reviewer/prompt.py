@@ -10,6 +10,6 @@ def ReviewerTestPrompt(role):
     return [
             {
         "role":role,
-        "content": "Code agent Test successfully, you can ask me to do some coding work now."
+        "content": "Isto é um teste de conexão, responda apenas True se isto chegou em você. Sem pegadinhas por gentileza."
         } 
    ]

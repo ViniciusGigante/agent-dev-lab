@@ -9,7 +9,7 @@ def health():
     return {"status": "ok"}
 
 @app.post("/test")
-def coder_test():
+def corrector_test():
     prompt = CorrectorTestPrompt("user")
 
     result = agent_corrector(prompt)
