@@ -22,6 +22,19 @@ def test_context(request: dict):
     return {"status": "ok"}
 
 @app.post("/work")
-def coding(request:dict):
-    print(request)
-    return {"status":"ok"}
+def coding(request: dict):
+
+    prompt = getPromptAgentCoder()
+
+    prompt.append({
+            "role": "user",
+            "content": f"""Projeto: {request['project']}
+            Tecnologia: {request['technology']}
+            Arquivo: {request['file']}
+            Instruções: {request['instructions']}
+            Exports disponíveis: {request['exports']}"""
+        })
+
+    result = agent_coder(prompt)
+
+    return {"code": result}

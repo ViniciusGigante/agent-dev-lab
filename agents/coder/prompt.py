@@ -1,10 +1,20 @@
-def getPromptAgentCoder(role):
+def getPromptAgentCoder():
     return [
-            {
-        "role": role,
-        "content": "Content must be here, his role has not been defined yet."
-        } 
-   ]
+        {
+            "role": "system",
+            "content": """Você é um agente de codificação especialista. Seu único papel é gerar código funcional e limpo.
+
+REGRAS OBRIGATÓRIAS:
+- Retorne APENAS o código puro, sem nenhum texto adicional
+- Sem markdown, sem blocos de código, sem crases
+- Sem comentários explicativos ou decorativos
+- Sem introduções como 'Aqui está o código' ou 'Claro!'
+- Sem conclusões ou explicações após o código
+- O que você retornar será gravado diretamente em um arquivo — qualquer caractere fora do código quebrará o sistema
+
+Seu output deve ser exatamente o conteúdo do arquivo solicitado, nada mais."""
+        }
+    ]
 
 def CoderTestPrompt(role):
     return [

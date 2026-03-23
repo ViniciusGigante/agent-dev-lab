@@ -1,0 +1,34 @@
+{
+  "project": "teste",
+  "status": "não iniciado",
+  "technology": {
+    "language": "Python 3"
+  },
+  "directory": "teste/",
+  "artifacts": {
+    "core": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "hello_world": {
+          "done": false,
+          "attempts": 0,
+          "file": "teste/hello.py",
+          "exports": [],
+          "instructions": "Crie um arquivo Python com uma função chamada hello() que retorna a string 'Hello World'. Exporte a função."
+        }
+      }
+    },
+    "utils": {
+      "status": "não iniciado",
+      "sub_artifacts": {
+        "soma": {
+          "done": false,
+          "attempts": 0,
+          "file": "teste/soma.py",
+          "exports": [],
+          "instructions": "Crie um arquivo Python com uma função chamada soma(a, b) que retorna a soma de dois números. Exporte a função."
+        }
+      }
+    }
+  }
+}

@@ -1,25 +1,24 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import readStates from '../src/readArtefacts.js'
-import selectProject from '../src/selector.js'
+
+// teste
+import fs from 'fs';
 
 dotenv.config()
 
-async function fetchCoder() {
+async function fetchCoder(project,artefact) {
     const { CODER_URL } = process.env
 
-    const projectFile = await selectProject()
-    const artefato = await readStates(projectFile)
-
-    const response = await fetch(CODER_URL + "/test/context", {
+    const response = await fetch(CODER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(artefato)
+        body: JSON.stringify(artefact)
     })
 
-    console.log(await response.json())
-}
+    //teste
+    fs.writeFile('../context/context.txt',response)
 
-fetchCoder()
+    return response;
+}
 
 export default fetchCoder
