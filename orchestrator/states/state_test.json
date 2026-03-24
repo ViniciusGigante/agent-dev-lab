@@ -1,20 +1,20 @@
 {
-  "project": "teste",
+  "project": "math_operations",
   "status": "não iniciado",
   "technology": {
     "language": "Python 3"
   },
-  "directory": "teste/",
+  "directory": "math_operations/",
   "artifacts": {
     "core": {
       "status": "não iniciado",
       "sub_artifacts": {
-        "hello_world": {
+        "basic_operations": {
           "done": false,
           "attempts": 0,
-          "file": "teste/hello.py",
-          "exports": [],
-          "instructions": "Crie um arquivo Python com uma função chamada hello() que retorna a string 'Hello World'."
+          "file": "math_operations/basic.py",
+          "exports": ["add", "subtract", "multiply", "divide", "power", "sqrt", "cbrt", "mean", "median", "mode", "variance"],
+          "instructions": "Crie as funções: add(a,b), subtract(a,b), multiply(a,b), divide(a,b) onde divide lança ValueError se b for zero, power(base,exp), sqrt(n) e cbrt(n) onde ambas lançam ValueError se n for negativo, mean(lista), median(lista), mode(lista) e variance(lista) onde todas lançam ValueError se a lista estiver vazia."
         }
       }
     }

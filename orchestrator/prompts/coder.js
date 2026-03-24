@@ -3,6 +3,7 @@ import fetch from 'node-fetch'
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import cleanPrompt from '../src/cleanPrompt.js'
 
 dotenv.config()
 
@@ -17,11 +18,12 @@ async function fetchCoder(artefact) {
         body: JSON.stringify(artefact)
     })
 
-    const code = await response.text()
+    const raw = await response.text();
+    const code = cleanPrompt(raw);
 
-    await fs.writeFile(path.join(__dirname, '..', 'data', 'context.txt'), code)
+    await fs.writeFile(path.join(__dirname, '..', 'data', 'context.txt'), code);
 
-    return code
+    return code;
 }
 
 export default fetchCoder
