@@ -1,6 +1,7 @@
 **/.env
 .env.example
 .env
-data
 docs
 teste.js
+/data/*
+!/data/.gitkeep

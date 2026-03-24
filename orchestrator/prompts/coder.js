@@ -1,10 +1,14 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 import fs from 'fs/promises'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
 
-async function fetchCoder(project, artefact) {
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+async function fetchCoder(artefact) {
     const { CODER_URL } = process.env
 
     const response = await fetch(CODER_URL + "/work", {
@@ -15,7 +19,7 @@ async function fetchCoder(project, artefact) {
 
     const code = await response.text()
 
-    await fs.writeFile('./context/context.txt', code)
+    await fs.writeFile(path.join(__dirname, '..', 'data', 'context.txt'), code)
 
     return code
 }
