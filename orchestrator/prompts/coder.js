@@ -26,4 +26,4 @@ async function fetchCoder(artefact) {
     return code;
 }
 
-export default fetchCoder
+export default fetchCoder;

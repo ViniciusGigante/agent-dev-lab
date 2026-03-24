@@ -1,25 +1,22 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import readStates from '../src/readArtefacts.js'
-import selectProject from '../src/selector.js'
+import cleanPrompt from '../src/cleanPrompt.js'
 
 dotenv.config()
 
-async function fetchCoder() {
-    const { CODER_URL } = process.env
+async function fetchReviewer(code,artefact) {
+    const { REVIEWER_URL } = process.env
 
-    const projectFile = await selectProject()
-    const artefato = await readStates(projectFile)
-
-    const response = await fetch(CODER_URL + "/test/context", {
+    const response = await fetch(REVIEWER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(artefato)
+        body: JSON.stringify(artefact)
     })
 
-    console.log(await response.json())
+    const raw = await response.text();
+    const cleanCode = cleanPrompt(raw);
+
+    return cleanCode;
 }
 
-fetchCoder()
-
-export default fetchCoder
+export default fetchReviewer;

@@ -1,11 +1,15 @@
 import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 import { checkApiHealth, checkAgentsHealth } from './src/checkHealth.js';
 import readStates from './src/readArtefacts.js';
 import selectProject from './src/selector.js';
-import fetchCoder from './prompts/coder.js';
 import saveProgress from './src/saveProgress.js';
-import { fileURLToPath } from 'url';
-import path from 'path';
+
+import fetchReviewer from './prompts/reviewer.js';
+import fetchCoder from './prompts/coder.js';
+import fetchCorrector from './prompts/corrector.js';
 
 const app = express();
 const port = 3000;
@@ -25,12 +29,16 @@ async function main() {
 
       await selectProject();
 
-      const artefact = await readStates('state.json', basePath); 
+      const artefact = await readStates('state.json', basePath);
+
       const prompt = await fetchCoder(artefact);
-      
-      await saveProgress(prompt, artefact.file);
+      const review = await fetchReviewer(prompt, artefact);
+      const correctorCode = await fetchCorrector(review,prompt);
+
+      await saveProgress(correctorCode, artefact.file);
 
       console.log(prompt);
+      console.log(review);
 
     } else {
       return console.error("Algum agente não está saudável. Verifique os logs.");
