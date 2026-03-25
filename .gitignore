@@ -5,3 +5,4 @@ docs
 teste.js
 /data/*
 !/data/.gitkeep
+writeLog.js

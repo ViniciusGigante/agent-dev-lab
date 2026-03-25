@@ -8,21 +8,11 @@ app = FastAPI()
 def health():
     return {"status": "ok"}
 
-@app.post("/test")
-def corrector_test():
-    prompt = CorrectorTestPrompt("user")
-
-    result = agent_corrector(prompt)
-
-    return {"result": result + "<Coder>"}
-
-@app.post("/test/context")
-def test_context(request: dict):
-    print(request)
-    return {"status": "ok"}
 
 @app.post("/work")
 def correct(request: dict):
+    print("request recebida no corrector:", request)
+
     prompt = getPromptAgentCorrector()
     prompt.append({
             "role": "user",
@@ -34,6 +24,8 @@ def correct(request: dict):
             Código com erro: {request['prompt']}
             Erros encontrados: {request['review']}"""
         })
+    
     result = agent_corrector(prompt)
+    print("resposta enviada ao orquestrador:", result)
 
     return {"code": result}

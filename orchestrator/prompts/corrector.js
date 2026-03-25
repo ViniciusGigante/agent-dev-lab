@@ -1,23 +1,23 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import cleanPrompt from '../src/cleanPrompt.js'
+
+import writeLog from '../src/writeLog.js';
 
 dotenv.config()
 
-
 async function fetchCorrector(review, prompt) {
-    const { CORRECTOR_URL } = process.env
+    const { CORRECTOR_URL } = process.env;
+
 
     const response = await fetch(CORRECTOR_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ review, prompt })
+        body: JSON.stringify({ review, prompt})
     })
 
-    const raw = await response.text();
-    const correctedCode = cleanPrompt(raw);
+    await writeLog(response,'logCorrector.txt');
 
-    return correctedCode;
+    return response;
 }
 
 export default fetchCorrector;

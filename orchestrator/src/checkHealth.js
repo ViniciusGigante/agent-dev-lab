@@ -33,31 +33,5 @@ async function checkApiHealth() {
     }
 }
 
-async function checkAgentsHealth() {
-    try {
-        const [coder, corrector, reviewer] = await Promise.all([
-            fetch(CODER_URL + "/test",{method: "POST"}).then(res => res.json()),
-            fetch(CORRECTOR_URL + "/test",{method: "POST"}).then(res => res.json()),
-            fetch(REVIEWER_URL + "/test",{method: "POST"}).then(res => res.json())
-        ])
 
-        const extract = (r) => /true/i.test(String(r?.result || r || "").trim())
-        const results = { coder: extract(coder), corrector: extract(corrector), reviewer: extract(reviewer) }
-
-        console.log("🧠 Coder:", results.coder ? "✅" : "❌")
-        console.log("🧠 Corrector:", results.corrector ? "✅" : "❌")
-        console.log("🧠 Reviewer:", results.reviewer ? "✅" : "❌")
-
-        const allReady = Object.values(results).every(Boolean)
-        allReady ? console.log("✅ All agents are thinking") : console.error("❌ One or more agents failed intelligence check")
-
-        return allReady
-
-    } catch(error) {
-        console.error("❌ Error checking intelligence:", error)
-        return false
-    }
-}
-
-
-export  { checkApiHealth, checkAgentsHealth };
+export  { checkApiHealth };

@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 import cleanPrompt from '../src/cleanPrompt.js'
 
+import writeLog from '../src/writeLog.js'
+
 dotenv.config()
 
 async function fetchReviewer(code,artefact) {
@@ -10,11 +12,13 @@ async function fetchReviewer(code,artefact) {
     const response = await fetch(REVIEWER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(artefact)
+        body: JSON.stringify({ ...artefact, code: code })
     })
 
     const raw = await response.text();
     const cleanCode = cleanPrompt(raw);
+
+    await writeLog(cleanCode, 'logReviewer.txt');
 
     return cleanCode;
 }

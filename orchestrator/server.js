@@ -2,7 +2,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-import { checkApiHealth, checkAgentsHealth } from './src/checkHealth.js';
+import { checkApiHealth } from './src/checkHealth.js';
 import readStates from './src/readArtefacts.js';
 import selectProject from './src/selector.js';
 import saveProgress from './src/saveProgress.js';
@@ -22,7 +22,7 @@ app.use(express.json());
 
 async function main() {
   try {
-    if(await checkApiHealth() && await checkAgentsHealth()) {
+    if(await checkApiHealth()) {
       app.listen(port, () => {
         console.log(`Orchestrator listening at http://localhost:${port}`);
       });
@@ -32,13 +32,10 @@ async function main() {
       const artefact = await readStates('state.json', basePath);
 
       const prompt = await fetchCoder(artefact);
-      const review = await fetchReviewer(prompt, artefact);
+      const review = await fetchReviewer(prompt, artefact); 
       const correctorCode = await fetchCorrector(review,prompt);
 
-      await saveProgress(correctorCode, artefact.file);
-
-      console.log(prompt);
-      console.log(review);
+      await saveProgress(correctorCode.code, artefact.file);
 
     } else {
       return console.error("Algum agente não está saudável. Verifique os logs.");

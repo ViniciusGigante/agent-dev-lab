@@ -8,21 +8,11 @@ app = FastAPI()
 def health():
     return {"status": "ok"}
 
-@app.post("/test")
-def reviewer_test():
-    prompt = ReviewerTestPrompt("user")
-
-    result = agent_reviewer(prompt)
-
-    return {"result": result + "<Coder>"}
-
-@app.post("/test/context")
-def test_context(request: dict):
-    print(request)
-    return {"status": "ok"}
 
 @app.post("/work")
 def review(request: dict):
+
+    print("request recebida no reviewer:", request)
 
     prompt = getPromptAgentReviewer()
     prompt.append({
@@ -36,5 +26,5 @@ def review(request: dict):
         })
     
     result = agent_reviewer(prompt)
-
+    print("resposta enviada ao orquestrador:", result)
     return {"review": result}

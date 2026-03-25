@@ -15,11 +15,3 @@ REGRAS OBRIGATÓRIAS:
 Seu output deve ser exatamente o conteúdo do arquivo solicitado, nada mais."""
         }
     ]
-
-def CoderTestPrompt(role):
-    return [
-            {
-        "role": role,
-        "content": "Isto é um teste de conexão, responda apenas True se isto chegou em você. Sem pegadinhas por gentileza."
-            }
-   ]

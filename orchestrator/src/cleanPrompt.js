@@ -1,6 +1,4 @@
 
-import { fileURLToPath } from 'url';
-
 function cleanPrompt(raw) {
 
     // Caso 1: JSON com campo code

@@ -5,6 +5,9 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import cleanPrompt from '../src/cleanPrompt.js'
 
+import writeLog from '../src/writeLog.js'
+import { write } from 'fs'
+
 dotenv.config()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -21,7 +24,9 @@ async function fetchCoder(artefact) {
     const raw = await response.text();
     const code = cleanPrompt(raw);
 
-    await fs.writeFile(path.join(__dirname, '..', 'data', 'context.txt'), code);
+    // await fs.writeFile(path.join(__dirname, '..', 'data', 'context.txt'), code);
+
+    await writeLog(code,'logCoder.txt');
 
     return code;
 }
