@@ -1,5 +1,5 @@
 from fastapi import FastAPI 
-from prompt import getPromptAgentCoder,CoderTestPrompt
+from prompt import getPromptAgentCoder
 from main import agent_coder
 
 app = FastAPI()

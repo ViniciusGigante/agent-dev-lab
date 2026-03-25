@@ -1,5 +1,5 @@
 from fastapi import FastAPI 
-from prompt import getPromptAgentReviewer,ReviewerTestPrompt
+from prompt import getPromptAgentReviewer
 from main import agent_reviewer
 
 app = FastAPI()
@@ -11,8 +11,6 @@ def health():
 
 @app.post("/work")
 def review(request: dict):
-
-    print("request recebida no reviewer:", request)
 
     prompt = getPromptAgentReviewer()
     prompt.append({
@@ -26,5 +24,4 @@ def review(request: dict):
         })
     
     result = agent_reviewer(prompt)
-    print("resposta enviada ao orquestrador:", result)
     return {"review": result}

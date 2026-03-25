@@ -4,7 +4,7 @@ services:
       context: orchestrator
       dockerfile: Dockerfile
     container_name: orchestrator
-    restart: unless-stopped
+    restart: "no"
     env_file:
       - .env
     volumes:
@@ -13,14 +13,18 @@ services:
       - equipe-ia
     ports:
       - "3000:3000"
-
+    depends_on:
+      coder-agent:
+        condition: service_healthy
+      reviewer-agent:
+        condition: service_healthy
 
   coder-agent:
     build:
       context: agents/coder
       dockerfile: Dockerfile
     container_name: coder-agent
-    restart: unless-stopped
+    restart: "no"
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
     volumes:
@@ -29,21 +33,12 @@ services:
       - equipe-ia
     ports:
       - "8001:8000"
-
-  corrector-agent:
-    build:
-      context: agents/corrector
-      dockerfile: Dockerfile
-    container_name: corrector-agent
-    restart: unless-stopped
-    environment:
-      - GROQ_API_KEY=${GROQ_API_KEY}
-    volumes:
-      - ./data:/app/data
-    networks:
-      - equipe-ia
-    ports:
-      - "8002:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
   reviewer-agent:
     build:
@@ -58,7 +53,13 @@ services:
     networks:
       - equipe-ia
     ports:
-      - "8003:8000"
+      - "8002:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
 networks:
   equipe-ia:

@@ -1,26 +1,22 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
-import cleanPrompt from '../src/cleanPrompt.js'
 
 import writeLog from '../src/writeLog.js'
 
 dotenv.config()
 
 async function fetchReviewer(code,artefact) {
-    const { REVIEWER_URL } = process.env
+    const { REVIEWER_URL } = process.env.REVIEWER_URL
 
     const response = await fetch(REVIEWER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...artefact, code: code })
+        body: JSON.stringify({  artefact, code: code })
     })
 
-    const raw = await response.text();
-    const cleanCode = cleanPrompt(raw);
+    await writeLog(response, 'logReviewer.txt');
 
-    await writeLog(cleanCode, 'logReviewer.txt');
-
-    return cleanCode;
+    return response;
 }
 
 export default fetchReviewer;
