@@ -6,7 +6,7 @@ async function readTasks(projectFile,basePath) {
     const state = JSON.parse(await fs.readFile(path.join(basePath, projectFile), 'utf-8'))
 
     for (const [artifactName, artifact] of Object.entries(state.artifacts)) {
-        if (artifact.status === "completo") continue
+        if (artifact.status === "concluido") continue
 
         for (const [subName, sub] of Object.entries(artifact.sub_artifacts)) {
             if (sub.done) continue;
@@ -24,8 +24,6 @@ async function readTasks(projectFile,basePath) {
         }
     }
 
-    
-    console.log("Nenhum sub-artefato pendente")
     return false;
 }
 

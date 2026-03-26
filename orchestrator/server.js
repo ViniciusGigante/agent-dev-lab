@@ -26,26 +26,32 @@ async function main() {
 
       await selectProject();
 
-      const task = await readTasks('state.json', basePath);
+      let task = await readTasks('state.json', basePath);
 
-      const codeResponse = await fetchCoder(task);
-      const analyzedResponse = await fetchReviewer(codeResponse, task); 
+      while(task){
 
-      const isCorrect = normalizeAgentResponse(analyzedResponse);
-      
-      try{
-          if(isCorrect) {
-                  console.log("Coder não cometeu erros.")
-                  await saveCode(codeResponse, task.file);
-                }else
-                  {console.log("o Código precisou ser corrigido pelo reviewer.")
-                    await saveCode(analyzedResponse, task.file);
-      }}
-      catch(error){
-        console.log("Erro ao salvar tarefa.")
-      }finally{
-          await completeTask(task,path.join(basePath,'state.json'))
-      }
+          const codeResponse = await fetchCoder(task);
+          const analyzedResponse = await fetchReviewer(codeResponse, task); 
+
+          const isCorrect = normalizeAgentResponse(analyzedResponse);
+          
+          try{
+              if(isCorrect) {
+                      console.log("Coder não cometeu erros.")
+                      await saveCode(codeResponse, task.file);
+                    }else
+                      {console.log("o Código precisou ser corrigido pelo reviewer.")
+                        await saveCode(analyzedResponse, task.file);
+          }}
+          catch(error){
+            console.log("Erro ao salvar tarefa.")
+          }finally{
+              await completeTask(task,path.join(basePath,'state.json'))
+          }
+
+          task = await readTasks('state.json', basePath);
+
+        }
 
       
   } catch(err) {
