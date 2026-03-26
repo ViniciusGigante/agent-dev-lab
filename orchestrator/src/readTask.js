@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-async function readStates(projectFile,basePath) {
+async function readTasks(projectFile,basePath) {
     
     const state = JSON.parse(await fs.readFile(path.join(basePath, projectFile), 'utf-8'))
 
@@ -26,7 +26,7 @@ async function readStates(projectFile,basePath) {
 
     
     console.log("Nenhum sub-artefato pendente")
-    return false
+    return false;
 }
 
-export default readStates
+export default readTasks
