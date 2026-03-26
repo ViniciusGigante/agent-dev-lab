@@ -1,11 +1,10 @@
-import dotenv from 'dotenv'
-import fetch from 'node-fetch'
+import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 
 dotenv.config()
 
-
 async function fetchCoder(artefact) {
-    const { CODER_URL } = process.env.CODER_URL
+    const { CODER_URL } = process.env;
 
     const response = await fetch(CODER_URL + "/work", {
         method: 'POST',
@@ -13,7 +12,13 @@ async function fetchCoder(artefact) {
         body: JSON.stringify(artefact)
     })
 
-    return response;
+    const data = await response.json();
+
+    console.log("//////////RESPOSTA CODER//////////")
+    console.log(data);
+    console.log("//////////RESPOSTA CODER//////////")
+
+    return data;
 }
 
 export default fetchCoder;

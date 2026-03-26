@@ -9,9 +9,11 @@ Sua tarefa é verificar se o código cumpre exatamente o que foi pedido no artef
 - As instruções foram seguidas corretamente?
 - O código tem erros de sintaxe ou lógica?
 
-Responda APENAS com JSON no formato:
-Se tiver erros apenas retorne uma resposta com o código corrigido,
-se não tiver então desconsidere uma resposta retorno, mande algo como ["aprovado"].
+Responda Código puro na linguagem especificada se houver.
+E foi dito isto, nada de caracteres ou elementos de abertura e fechamento, somente o
+código natural na sua forma correta, se possivel retonre em texto mas usando sintaxe na linguagem feita.
+Especificação espeicial: só faça isto se tiver erros, caso contrário ignore esta mensagem e mande apenas um 
+"Aprovado", lembrando de que caracteres será rejeitado.
 """
         }
     ]

@@ -9,7 +9,7 @@ async function readStates(projectFile,basePath) {
         if (artifact.status === "completo") continue
 
         for (const [subName, sub] of Object.entries(artifact.sub_artifacts)) {
-            if (sub.done) continue
+            if (sub.done) continue;
 
             return {
                 artifactName,
@@ -24,6 +24,7 @@ async function readStates(projectFile,basePath) {
         }
     }
 
+    
     console.log("Nenhum sub-artefato pendente")
     return false
 }

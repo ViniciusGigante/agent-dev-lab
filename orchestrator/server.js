@@ -5,7 +5,7 @@ import path from 'path';
 import readStates from './src/readArtefacts.js';
 import selectProject from './src/selector.js';
 import saveProgress from './src/saveProgress.js';
-import validateResponse from './src/validateReponse.js';
+import normalizeAgentResponse from './src/validateReponse.js';
 
 import fetchReviewer from './prompts/reviewer.js';
 import fetchCoder from './prompts/coder.js';
@@ -27,22 +27,19 @@ async function main() {
 
       const artefact = await readStates('state.json', basePath);
 
-      console.log("ARTEFATO: \n"+artefact);
-
       const codeResponse = await fetchCoder(artefact);
       const analyzedResponse = await fetchReviewer(codeResponse, artefact); 
 
-      const isCorrect = validateResponse(analyzedResponse);
+      const isCorrect = normalizeAgentResponse(analyzedResponse);
       
 
       if(isCorrect) {
-
+        console.log("Coder não cometeu erros.")
         await saveProgress(codeResponse, artefact.file);
       }else
+        {console.log("o Código precisou ser corrigido pelo reviewer.")
+          await saveProgress(analyzedResponse, artefact.file);}
 
-        {await saveProgress(analyzedResponse, artefact.file);}
-
-      return console.error("Algum agente não está saudável. Verifique os logs.");
   } catch(err) {
     console.error("Erro no pipeline:", err.message);
     process.exit(1);

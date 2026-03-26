@@ -1,22 +1,30 @@
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 
-import writeLog from '../src/writeLog.js'
-
 dotenv.config()
 
 async function fetchReviewer(code,artefact) {
-    const { REVIEWER_URL } = process.env.REVIEWER_URL
+    const { REVIEWER_URL } = process.env;
 
     const response = await fetch(REVIEWER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({  artefact, code: code })
+        body: JSON.stringify({
+            project: artefact.project,
+            technology: artefact.technology,
+            file: artefact.file,
+            instructions: artefact.instructions,
+            exports: artefact.exports,
+            code: code
+})
     })
 
-    await writeLog(response, 'logReviewer.txt');
+    const data = await response.json();
 
-    return response;
+    console.log("//////////RESPOSTA REVIEWER//////////")
+    console.log(data);
+    console.log("//////////RESPOSTA REVIEWER//////////")
+    return data;
 }
 
 export default fetchReviewer;

@@ -24,4 +24,4 @@ def coding(request: dict):
 
     result = agent_coder(prompt)
 
-    return {"code": result}
+    return result

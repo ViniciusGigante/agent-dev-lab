@@ -24,4 +24,4 @@ def review(request: dict):
         })
     
     result = agent_reviewer(prompt)
-    return {"review": result}
+    return result
