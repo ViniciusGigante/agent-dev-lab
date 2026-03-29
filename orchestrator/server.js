@@ -28,26 +28,26 @@ async function main() {
 
         await selectProject();
 
-        let task = await readTasks('state.json', basePath);
+        const task = await readTasks('state.json', basePath);
 
-        while (task) {
+        if (task) {
             const context = await getContext();
             const codeResponse = await fetchCoder(task, context);
+            console.log('codeResponse type:', typeof codeResponse);
             const analyzedResponse = await fetchReviewer(codeResponse, task);
 
             const { isApproved, code } = normalizeAgentResponse(analyzedResponse);
             const resultCode = isApproved ? codeResponse : code;
 
             try {
-                await fetchContext(resultCode);
+                const contextData = await fetchContext(resultCode);
+                console.log('contextData:', JSON.stringify(contextData));
+                await saveContext(task.file, contextData);
                 await saveCode(resultCode, task.file);
-                await saveContext(task.file, context);
                 await completeTask(task, path.join(basePath, 'state.json'));
             } catch (error) {
                 console.log("Erro ao salvar tarefa.");
             }
-
-            task = await readTasks('state.json', basePath);
         }
 
     } catch (err) {
@@ -55,5 +55,4 @@ async function main() {
         process.exit(1);
     }
 }
-
 main();

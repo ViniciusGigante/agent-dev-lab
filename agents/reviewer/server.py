@@ -8,18 +8,17 @@ app = FastAPI()
 def health():
     return {"status": "ok"}
 
-
 @app.post("/work")
 def review(request: dict):
 
     prompt = getPromptAgentReviewer()
     prompt.append({
             "role": "user",
-            "content": f"""Projeto: {request['project']}
-            Tecnologia: {request['technology']}
+            "content": f"""Tecnologia: {request['technology']}
+            Dependencias: {request['dependencies']}
+            Regras: {request['rules']}
             Arquivo: {request['file']}
             Instruções: {request['instructions']}
-            Exports disponíveis: {request['exports']}
             Código gerado: {request['code']}"""
         })
     

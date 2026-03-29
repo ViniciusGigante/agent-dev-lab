@@ -24,8 +24,9 @@ async function getContext() {
 
 async function saveContext(filePath, newContext) {
   try {
-    let existing = {};
+    await fs.mkdir(path.dirname(contextPath), { recursive: true });
 
+    let existing = {};
     try {
       const raw = await fs.readFile(contextPath, 'utf-8');
       existing = JSON.parse(raw);

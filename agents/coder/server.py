@@ -15,11 +15,12 @@ def coding(request: dict):
 
     prompt.append({
             "role": "user",
-            "content": f"""Projeto: {request['project']}
-            Tecnologia: {request['technology']}
+            "content": f"""Tecnologia: {request['technology']}
+            Dependencias: {request['dependencies']}
+            Regras: {request['rules']}
             Arquivo: {request['file']}
             Instruções: {request['instructions']}
-            Exports disponíveis: {request['exports']}"""
+            Contexto do projeto: {request['context']}"""
         })
 
     result = agent_coder(prompt)

@@ -29,6 +29,7 @@ services:
     restart: "no"
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
+      - MODEL_AGENT=${MODEL_AGENT}
     volumes:
       - ./data:/app/data
     networks:
@@ -50,6 +51,7 @@ services:
     restart: unless-stopped
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
+      - MODEL_AGENT=${MODEL_AGENT}
     volumes:
       - ./data:/app/data
     networks:
@@ -63,25 +65,26 @@ services:
       retries: 5
       start_period: 10s
 
-    context-agent:
-      build:
-        context: agents/context
-        dockerfile: Dockerfile
-      container_name: context-agent
-      ports:
-        - "8003:8000"
-      environment:
-      - GROQ_API_KEY=${GROQ_API_KEY}
-      volumes:
-        - ./data:/app/data
-      healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-        interval: 5s
-        timeout: 3s
-        retries: 5
-        start_period: 10s
-      networks:
-        - equipe-ia
+  context-agent:
+    build:
+      context: agents/context
+      dockerfile: Dockerfile
+    container_name: context-agent
+    ports:
+      - "8003:8000"
+    environment:
+    - GROQ_API_KEY=${GROQ_API_KEY}
+    - MODEL_AGENT=${MODEL_AGENT}
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    networks:
+      - equipe-ia
 
 
 networks:

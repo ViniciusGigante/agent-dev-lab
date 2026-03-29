@@ -16,7 +16,7 @@ async function fetchContext(code) {
             body: JSON.stringify({ code })
         });
         const data = await response.json();
-        return data;
+        return typeof data === 'string' ? JSON.parse(data) : data;
     } catch (error) {
         console.error('Error fetching context:', error);
         throw error;

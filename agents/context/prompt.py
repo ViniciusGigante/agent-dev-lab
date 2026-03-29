@@ -10,11 +10,8 @@ REGRAS DE EXTRAÇÃO:
 - O JSON deve seguir exatamente este formato:
 
 {
-  "nome_do_arquivo.ext": {
-    "caminho": "caminho/relativo/do/arquivo.ext",
-    "exports": ["funcao(param1, param2)", "outraFuncao(param)"],
-    "dom": ["#id-elemento"]
-  }
+  "exports": ["funcao(param1, param2)", "outraFuncao(param)"],
+  "dom": ["#id-elemento"]
 }
 
 - "exports" deve listar apenas funções, classes ou variáveis exportadas com suas assinaturas completas.

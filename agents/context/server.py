@@ -1,4 +1,4 @@
-from fatapi import FastAPI
+from fastapi import FastAPI
 from main import agent_context
 from prompt import getPromptAgentContext
 
