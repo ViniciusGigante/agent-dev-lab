@@ -8,22 +8,20 @@ async function completeTask(task, pathFile) {
         const subTasks = artifact.sub_artifacts;
 
         if (subTasks[task.subName]) {
-            
+
             subTasks[task.subName].done = true;
-            subTasks[task.subName].attempts = (subTasks[task.subName].attempts || 0) + 1;
 
-            
             const allSubDone = Object.values(subTasks).every(sub => sub.done);
-            if (allSubDone) artifact.status = "concluido";
+            if (allSubDone) artifact.done = true;
 
-            
             await fs.writeFile(pathFile, JSON.stringify(state, null, 2), 'utf-8');
 
-            
             const allArtifactsDone = Object.values(state.artifacts)
-                                          .every(a => a.status === "concluido");
+                                          .every(a => a.done);
 
             if (allArtifactsDone) {
+                state.status = true;
+                await fs.writeFile(pathFile, JSON.stringify(state, null, 2), 'utf-8');
                 return { success: true, message: "Projeto concluído" };
             }
 

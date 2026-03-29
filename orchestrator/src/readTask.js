@@ -1,30 +1,29 @@
 import fs from 'fs/promises'
 import path from 'path'
 
-async function readTasks(projectFile,basePath) {
-    
+async function readTasks(projectFile, basePath) {
+
     const state = JSON.parse(await fs.readFile(path.join(basePath, projectFile), 'utf-8'))
 
     for (const [artifactName, artifact] of Object.entries(state.artifacts)) {
-        if (artifact.status === "concluido") continue
+        if (artifact.done) continue
 
         for (const [subName, sub] of Object.entries(artifact.sub_artifacts)) {
-            if (sub.done) continue;
+            if (sub.done) continue
 
             return {
                 artifactName,
                 subName,
                 file: sub.file,
                 instructions: sub.instructions,
-                exports: sub.exports,
-                attempts: sub.attempts,
                 technology: state.technology,
-                project: state.project
+                dependencies: state.dependencies,
+                rules: state.rules
             }
         }
     }
 
-    return false;
+    return false
 }
 
 export default readTasks
