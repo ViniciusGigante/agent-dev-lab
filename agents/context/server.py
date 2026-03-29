@@ -12,10 +12,8 @@ def health():
 def context(request: dict):
     prompt = getPromptAgentContext()
     prompt.append({
-            "role": "user",
-            "content": f"""Projeto: {request['project']}
-            Tecnologia: {request['technology']}
-            Arquivo: {request['file']}
-            Código: {request['code']}"""
-        })
-    return agent_context(prompt)
+        "role": "user",
+        "content": request['code']
+    })
+    result = agent_context(prompt)
+    return result

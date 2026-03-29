@@ -4,17 +4,17 @@ import { fileURLToPath } from 'url';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__fileName);
-const contextPath = path.join(__dirname, '..', '..', 'data', 'memory', 'space.txt');
+const contextPath = path.join(__dirname, '..', '..', 'data', 'memory', 'space.json');
 
 async function getContext() {
   try {
-    const stats = await fs.promises.stat(contextPath);
+    const stats = await fs.stat(contextPath);
 
     if (stats.size === 0) {
       return 'Sem contexto no momento, inicio do projeto!';
     }
 
-    const context = await fs.promises.readFile(contextPath, 'utf-8');
+    const context = await fs.readFile(contextPath, 'utf-8');
     return context;
 
   } catch (err) {
@@ -22,4 +22,23 @@ async function getContext() {
   }
 }
 
-export default getContext;
+async function saveContext(filePath, newContext) {
+  try {
+    let existing = {};
+
+    try {
+      const raw = await fs.readFile(contextPath, 'utf-8');
+      existing = JSON.parse(raw);
+    } catch {
+      existing = {};
+    }
+
+    const merged = { ...existing, [filePath]: newContext };
+    await fs.writeFile(contextPath, JSON.stringify(merged, null, 2), 'utf-8');
+
+  } catch (error) {
+    console.error('Erro ao salvar contexto:', error);
+  }
+}
+
+export { getContext, saveContext };
