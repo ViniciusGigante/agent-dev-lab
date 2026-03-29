@@ -3,13 +3,13 @@ import fetch from 'node-fetch';
 
 dotenv.config()
 
-async function fetchCoder(task) {
+async function fetchCoder(task,context) {
     const { CODER_URL } = process.env;
 
     const response = await fetch(CODER_URL + "/work", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(task)
+        body: JSON.stringify({ task, context })
     })
 
     const data = await response.json();

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-async function fetchContext(task) {
+async function fetchContext(code) {
 
     try{
         const { CONTEXT_URL } = process.env;
@@ -13,7 +13,7 @@ async function fetchContext(task) {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(task)
+            body: JSON.stringify({ code })
         });
         const data = await response.json();
         return data;

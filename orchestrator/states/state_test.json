@@ -1,20 +1,21 @@
 {
-  "project": "math_operations",
-  "status": "não iniciado",
-  "technology": {
-    "language": "Python 3"
-  },
+  "status": false,
   "directory": "math_operations/",
+  "technology": ["Python 3"],
+  "dependencies": [],
+  "rules": [
+    "nomes em inglês e semânticos",
+    "funções puras sem efeitos colaterais",
+    "lançar ValueError com mensagem descritiva para entradas inválidas"
+  ],
   "artifacts": {
     "core": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "basic_operations": {
+        "basic.py": {
           "done": false,
-          "attempts": 0,
           "file": "math_operations/basic.py",
-          "exports": ["add", "subtract", "multiply", "divide", "power", "sqrt", "cbrt", "mean", "median", "mode", "variance"],
-          "instructions": "Crie as funções: add(a,b), subtract(a,b), multiply(a,b), divide(a,b) onde divide lança ValueError se b for zero, power(base,exp), sqrt(n) e cbrt(n) onde ambas lançam ValueError se n for negativo, mean(lista), median(lista), mode(lista) e variance(lista) onde todas lançam ValueError se a lista estiver vazia."
+          "instructions": "Crie funções matemáticas puras. Deve conter: add(a,b), subtract(a,b), multiply(a,b), divide(a,b) lançando ValueError se b for zero, power(base,exp), sqrt(n) e cbrt(n) lançando ValueError se n for negativo, mean(lista), median(lista), mode(lista) e variance(lista) lançando ValueError se lista estiver vazia."
         }
       }
     }

@@ -6,3 +6,4 @@ teste.js
 /data/*
 !/data/.gitkeep
 writeLog.js
+!/data/memory/

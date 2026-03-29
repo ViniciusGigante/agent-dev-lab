@@ -1,108 +1,87 @@
 {
-  "project": "todo",
-  "status": "não iniciado",
-  "technology": {
-    "language": "JavaScript puro",
-    "style": "CSS puro",
-    "structure": "HTML estático",
-    "tipo": "Kanban com drag and drop estilo Trello"
-  },
+  "status": false,
   "directory": "todo/",
+  "technology": ["JavaScript", "CSS", "HTML"],
+  "dependencies": [],
+  "rules": [
+    "export function em todos os arquivos exceto main.js",
+    "nomes em português e semânticos",
+    "sem bibliotecas externas",
+    "todos os arquivos JS com type='module'"
+  ],
   "artifacts": {
     "estrutura_base": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "criar_index_html": {
+        "index.html": {
           "done": false,
-          "attempts": 0,
           "file": "todo/index.html",
-          "exports": [],
-          "instructions": "Crie o HTML base do kanban. Deve conter: estrutura semântica com head e body, importação do style.css, importação de todos os arquivos JS em ordem (state.js, storage.js, tasks.js, drag.js, drop.js, cards.js, columns.js, eventos.js, main.js) com type='module' no último ou todos, um header com o título 'My Board' e botão para adicionar nova tarefa, um main com id='board' contendo três colunas div com classes 'column' e atributos data-status='todo' data-status='doing' data-status='done', cada coluna deve ter um header com o nome da coluna e contador de cards, cada coluna deve ter uma div com classe 'cards-container' e atributo data-drop-zone onde os cards serão inseridos dinamicamente, um modal oculto com id='modal-tarefa' para criação e edição de tarefas contendo campos para título, descrição e prioridade (alta, média, baixa), botões de confirmar e cancelar no modal."
+          "instructions": "Crie o HTML base do kanban. Deve conter: importação do style.css e de todos os JS em ordem (state.js, storage.js, tasks.js, drag.js, drop.js, cards.js, columns.js, eventos.js, main.js), header com título 'My Board' e botão de adicionar tarefa, main com id='board' contendo três colunas com data-status='todo', data-status='doing', data-status='done', cada coluna com header com nome e contador e div com classe 'cards-container' e atributo data-drop-zone, modal oculto com id='modal-tarefa' com campos de título, descrição e prioridade (alta, média, baixa) e botões confirmar e cancelar."
         },
-        "criar_style_css": {
+        "style.css": {
           "done": false,
-          "attempts": 0,
           "file": "todo/style.css",
-          "exports": [],
-          "instructions": "Crie o CSS completo do kanban estilo Trello. Deve conter: reset básico com box-sizing border-box e margin padding zero, variáveis CSS para cores: fundo azul escuro similar ao Trello, colunas em cinza claro, cards brancos, cores de prioridade alta em vermelho média em amarelo baixa em verde, estilo do header com fundo escuro logo e botão de adicionar tarefa, layout do board como flexbox horizontal com gap entre colunas e overflow-x auto para scroll horizontal, estilo das colunas com largura fixa de 272px fundo cinza claro bordas arredondadas padding e altura máxima com scroll vertical, estilo dos cards com fundo branco bordas arredondadas sombra suave padding cursor grab e transição suave, estado dragging do card com opacidade reduzida e cursor grabbing, estado drag-over da coluna com borda destacada indicando zona de drop válida, estilo do modal com overlay escuro centralizado animação de entrada, estilo das prioridades como badge colorido no card, responsividade para mobile com colunas em largura total e scroll horizontal no board."
+          "instructions": "Crie o CSS completo estilo Trello. Deve conter: reset básico, variáveis CSS para fundo azul escuro, colunas cinza claro, cards brancos, prioridade alta em vermelho, média em amarelo, baixa em verde, header escuro com botão de adicionar, board como flexbox horizontal com overflow-x auto, colunas com largura fixa 272px altura máxima com scroll vertical, cards com cursor grab sombra suave e transição, estado dragging com opacidade reduzida, estado drag-over com borda destacada, modal com overlay escuro e animação de entrada, badges de prioridade coloridos, responsividade mobile com scroll horizontal."
         }
       }
     },
     "logica_core": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "estado_tarefas": {
+        "state.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/state.js",
-          "exports": [],
-          "instructions": "Crie o módulo de estado global da aplicação. Deve conter: objeto state com campos: tarefas como array vazio, filtroAtivo como string 'todas', modoEdicao como null para armazenar id da tarefa sendo editada, função getState() que retorna uma cópia do estado atual para evitar mutação direta, função setState(novoEstado) que merge o novoEstado com o estado atual e dispara evento customizado 'state-changed' no document, função getTarefas() que retorna o array de tarefas do estado, função getTarefaPorId(id) que busca e retorna uma tarefa pelo id ou null se não encontrar, função setTarefas(tarefas) que atualiza o array de tarefas no estado e chama setState. Exporte getState, setState, getTarefas, getTarefaPorId, setTarefas."
+          "instructions": "Crie o módulo de estado global. Deve conter: objeto state com tarefas como array vazio, filtroAtivo como 'todas', modoEdicao como null, função getState() retornando cópia do estado, função setState(novoEstado) fazendo merge e disparando evento customizado 'state-changed' no document, função getTarefas() retornando array de tarefas, função getTarefaPorId(id) retornando tarefa ou null, função setTarefas(tarefas) atualizando array e chamando setState."
         },
-        "crud_tarefas": {
+        "storage.js": {
           "done": false,
-          "attempts": 0,
-          "file": "todo/js/tasks.js",
-          "exports": [],
-          "instructions": "Crie funções para operações CRUD nas tarefas. Deve importar getState, setTarefas, getTarefaPorId de state.js e salvarTarefas de storage.js. Deve conter: função criarTarefa(titulo, descricao, prioridade) que cria objeto tarefa com id único gerado por Date.now().toString(), titulo, descricao, prioridade, status como 'todo', criadoEm como new Date().toISOString(), adiciona ao array de tarefas e salva, função atualizarTarefa(id, campos) que encontra a tarefa pelo id e atualiza apenas os campos recebidos mantendo os demais e salva, função moverTarefa(id, novoStatus) que atualiza apenas o status da tarefa para 'todo', 'doing' ou 'done' e salva, função deletarTarefa(id) que remove a tarefa do array pelo id e salva, função obterTarefasPorStatus(status) que filtra e retorna tarefas pelo status. Exporte todas as funções."
-        },
-        "persistencia_localstorage": {
-          "done": false,
-          "attempts": 0,
           "file": "todo/js/storage.js",
-          "exports": [],
-          "instructions": "Crie funções para persistir dados no localStorage. Deve conter: constante STORAGE_KEY com valor 'kanban_tarefas', função salvarTarefas(tarefas) que serializa o array com JSON.stringify e salva no localStorage na chave STORAGE_KEY, função carregarTarefas() que lê do localStorage pela chave STORAGE_KEY e faz JSON.parse retornando array vazio se não houver dados ou se ocorrer erro no parse, função limparStorage() que remove a chave STORAGE_KEY do localStorage, função exportarDados() que retorna todos os dados como JSON formatado para download ou cópia. Exporte todas as funções."
+          "instructions": "Crie funções de persistência. Deve conter: STORAGE_KEY='kanban_tarefas', função salvarTarefas(tarefas) serializando com JSON.stringify, função carregarTarefas() lendo e fazendo JSON.parse retornando array vazio em caso de erro, função limparStorage() removendo a chave, função exportarDados() retornando JSON formatado."
+        },
+        "tasks.js": {
+          "done": false,
+          "file": "todo/js/tasks.js",
+          "instructions": "Crie funções CRUD de tarefas. Deve conter: criarTarefa(titulo, descricao, prioridade) criando objeto com id via Date.now().toString(), status 'todo' e criadoEm como ISO string, atualizarTarefa(id, campos) atualizando apenas os campos recebidos, moverTarefa(id, novoStatus) atualizando apenas status para 'todo', 'doing' ou 'done', deletarTarefa(id) removendo do array, obterTarefasPorStatus(status) filtrando por status. Todas salvam chamando salvarTarefas."
         }
       }
     },
     "drag_and_drop": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "logica_drag": {
+        "drag.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/drag.js",
-          "exports": [],
-          "instructions": "Crie funções para gerenciar o início do arrastar dos cards. Deve conter: variável draggedCardId como null para armazenar qual card está sendo arrastado, função iniciarDrag(evento, cardId) que é chamada no evento dragstart de um card, define draggedCardId com o cardId recebido, adiciona classe 'dragging' ao elemento arrastado via evento.target, define os dados do drag com evento.dataTransfer.setData passando o cardId como string, define evento.dataTransfer.effectAllowed como 'move', função encerrarDrag(evento) que é chamada no evento dragend, remove classe 'dragging' do elemento, reseta draggedCardId para null, função obterDraggedCardId() que retorna o valor atual de draggedCardId para ser usado pelo módulo de drop. Exporte iniciarDrag, encerrarDrag, obterDraggedCardId."
+          "instructions": "Crie funções de drag. Deve conter: variável draggedCardId como null, iniciarDrag(evento, cardId) definindo draggedCardId, adicionando classe 'dragging', setando dataTransfer com cardId e effectAllowed como 'move', encerrarDrag(evento) removendo classe 'dragging' e resetando draggedCardId, obterDraggedCardId() retornando draggedCardId atual."
         },
-        "logica_drop": {
+        "drop.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/drop.js",
-          "exports": [],
-          "instructions": "Crie funções para gerenciar a soltura dos cards nas colunas. Deve importar obterDraggedCardId de drag.js e moverTarefa de tasks.js. Deve conter: função permitirDrop(evento) que é chamada no evento dragover de uma zona de drop, chama evento.preventDefault() para permitir o drop, adiciona classe 'drag-over' ao elemento alvo se ainda não tiver, função sairDaZona(evento) que é chamada no evento dragleave de uma zona de drop, remove classe 'drag-over' do elemento, função executarDrop(evento, colunaStatus) que é chamada no evento drop de uma zona de drop, chama evento.preventDefault(), remove classe 'drag-over', obtém o id do card sendo arrastado via obterDraggedCardId(), chama moverTarefa com o id e o colunaStatus recebido para atualizar o estado, dispara evento customizado 'tarefa-movida' no document para que a interface re-renderize. Exporte permitirDrop, sairDaZona, executarDrop."
+          "instructions": "Crie funções de drop. Deve conter: permitirDrop(evento) chamando preventDefault e adicionando classe 'drag-over', sairDaZona(evento) removendo classe 'drag-over', executarDrop(evento, colunaStatus) chamando preventDefault, removendo 'drag-over', obtendo id via obterDraggedCardId, chamando moverTarefa e disparando evento customizado 'tarefa-movida' no document."
         }
       }
     },
     "interface": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "renderizar_cards": {
+        "cards.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/cards.js",
-          "exports": [],
-          "instructions": "Crie funções para criar e renderizar elementos de card. Deve importar iniciarDrag e encerrarDrag de drag.js. Deve conter: função criarElementoCard(tarefa) que recebe um objeto tarefa e retorna um elemento div com classe 'card', atributo data-id com o id da tarefa, atributo draggable='true', conteúdo HTML interno com o título da tarefa, badge de prioridade com cor correspondente, descrição truncada se muito longa, botões de editar e deletar com data-id, eventos dragstart apontando para iniciarDrag e dragend para encerrarDrag, função atualizarContadorColuna(status, quantidade) que atualiza o número exibido no header da coluna correspondente ao status. Exporte criarElementoCard e atualizarContadorColuna."
+          "instructions": "Crie funções de renderização de cards. Deve conter: criarElementoCard(tarefa) retornando div com classe 'card', data-id, draggable='true', título, badge de prioridade colorido, descrição truncada, botões editar e deletar com data-id, eventos dragstart para iniciarDrag e dragend para encerrarDrag, atualizarContadorColuna(status, quantidade) atualizando número no header da coluna correspondente."
         },
-        "renderizar_colunas": {
+        "columns.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/columns.js",
-          "exports": [],
-          "instructions": "Crie funções para renderizar e atualizar as colunas do kanban. Deve importar obterTarefasPorStatus de tasks.js, criarElementoCard e atualizarContadorColuna de cards.js, permitirDrop, sairDaZona e executarDrop de drop.js. Deve conter: função renderizarColuna(status) que seleciona o elemento cards-container com data-drop-zone correspondente ao status, limpa o conteúdo atual, obtém as tarefas daquele status, cria e adiciona um elemento card para cada tarefa, atualiza o contador da coluna, função renderizarBoard() que chama renderizarColuna para cada um dos três status 'todo' 'doing' 'done', função inicializarDropZones() que seleciona todos os elementos com data-drop-zone e adiciona os eventos dragover dragleave e drop apontando para as funções de drop.js passando o status correto de cada zona. Exporte renderizarBoard e inicializarDropZones."
+          "instructions": "Crie funções de renderização de colunas. Deve conter: renderizarColuna(status) selecionando cards-container do status, limpando conteúdo, criando e adicionando cards, atualizando contador, renderizarBoard() chamando renderizarColuna para 'todo', 'doing' e 'done', inicializarDropZones() adicionando eventos dragover, dragleave e drop em todos os elementos data-drop-zone passando o status correto."
         },
-        "eventos": {
+        "eventos.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/eventos.js",
-          "exports": [],
-          "instructions": "Crie funções para gerenciar eventos da interface como modal e botões de ação. Deve importar criarTarefa, atualizarTarefa, deletarTarefa de tasks.js e renderizarBoard de columns.js e getState, setState de state.js. Deve conter: função abrirModalCriacao() que exibe o modal com campos vazios e define modoEdicao como null no estado, função abrirModalEdicao(id) que busca a tarefa pelo id preenche os campos do modal com os dados atuais e define modoEdicao como o id no estado, função fecharModal() que esconde o modal e limpa os campos, função salvarModal() que lê os valores dos campos do modal e chama criarTarefa ou atualizarTarefa dependendo do modoEdicao depois chama fecharModal e renderizarBoard, função confirmarDelecao(id) que pede confirmação ao usuário e chama deletarTarefa seguido de renderizarBoard, função inicializarEventosDelegados() que adiciona event listener de click no document e verifica o alvo para capturar cliques nos botões de editar deletar e adicionar tarefa usando delegação de eventos. Exporte inicializarEventosDelegados."
+          "instructions": "Crie funções de eventos da interface. Deve conter: abrirModalCriacao() exibindo modal com campos vazios e modoEdicao null, abrirModalEdicao(id) preenchendo modal com dados da tarefa e definindo modoEdicao como id, fecharModal() escondendo modal e limpando campos, salvarModal() lendo campos e chamando criarTarefa ou atualizarTarefa conforme modoEdicao depois fecharModal e renderizarBoard, confirmarDelecao(id) pedindo confirmação e chamando deletarTarefa e renderizarBoard, inicializarEventosDelegados() adicionando listener de click no document com delegação para botões de editar, deletar e adicionar."
         },
-        "main": {
+        "main.js": {
           "done": false,
-          "attempts": 0,
           "file": "todo/js/main.js",
-          "exports": [],
-          "instructions": "Crie o arquivo principal que inicializa a aplicação kanban. Deve importar carregarTarefas de storage.js, setTarefas de state.js, renderizarBoard e inicializarDropZones de columns.js, inicializarEventosDelegados de eventos.js. Deve conter: função inicializar() que em sequência: chama carregarTarefas e passa o resultado para setTarefas para restaurar dados salvos, chama inicializarDropZones para preparar as zonas de drop, chama inicializarEventosDelegados para preparar os eventos, chama renderizarBoard para renderizar o estado inicial, adiciona listener no document para o evento customizado 'state-changed' que chama renderizarBoard para manter a interface sincronizada com o estado, chamada de inicializar() dentro de DOMContentLoaded. Não exporte nada pois é o ponto de entrada."
+          "instructions": "Crie o ponto de entrada. Deve conter: função inicializar() que chama carregarTarefas e passa para setTarefas, chama inicializarDropZones, inicializarEventosDelegados e renderizarBoard, adiciona listener no document para 'state-changed' chamando renderizarBoard, chamada de inicializar() dentro de DOMContentLoaded. Não exporta nada."
         }
       }
     }

@@ -1,109 +1,87 @@
 {
-  "project": "express-crud",
-  "status": "não iniciado",
-  "technology": {
-    "language": "JavaScript",
-    "framework": "Express.js",
-    "runtime": "Node.js",
-    "containerization": "Docker",
-    "tipo": "CRUD de funcionários com registro de ponto, cargo e salário"
-  },
+  "status": false,
   "directory": "express-crud/",
+  "technology": ["JavaScript", "Node.js", "Express.js", "Docker"],
+  "dependencies": ["express", "uuid", "cors", "dotenv", "nodemon"],
+  "rules": [
+    "dados armazenados em memória como array, sem banco de dados",
+    "soft delete em vez de deleção física",
+    "export function em todos os arquivos exceto server.js",
+    "nomes em português e semânticos"
+  ],
   "artifacts": {
     "configuracao": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "package_json": {
+        "package.json": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/package.json",
-          "exports": [],
-          "instructions": "Crie o package.json do projeto Express. Deve conter: name como 'express-crud-funcionarios', version como '1.0.0', description como 'API CRUD de funcionários com registro de ponto', main como 'src/server.js', scripts com start apontando para node src/server.js e dev apontando para nodemon src/server.js, dependencies incluindo express na versão mais recente estável, uuid para geração de ids únicos, cors para liberar requisições cross-origin, dotenv para variáveis de ambiente, devDependencies incluindo nodemon. Não inclua banco de dados pois os dados serão armazenados em memória como array durante a execução do servidor."
+          "instructions": "Crie o package.json do projeto Express. Deve conter: name como 'express-crud-funcionarios', version como '1.0.0', main como 'src/server.js', scripts com start apontando para node src/server.js e dev apontando para nodemon src/server.js, dependencies incluindo express, uuid, cors e dotenv, devDependencies incluindo nodemon."
         },
-        "dockerfile": {
+        "Dockerfile": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/Dockerfile",
-          "exports": [],
-          "instructions": "Crie o Dockerfile para o servidor Express. Deve conter: FROM node:18-alpine como imagem base, WORKDIR /app, COPY package.json e package-lock.json antes do restante para aproveitar cache do Docker, RUN npm install apenas das dependências de produção com flag --production, COPY do restante dos arquivos, EXPOSE 3000, CMD com node src/server.js. Não use nodemon na imagem de produção."
+          "instructions": "Crie o Dockerfile para o servidor Express. Deve conter: FROM node:18-alpine, WORKDIR /app, COPY package.json antes do restante para aproveitar cache do Docker, RUN npm install --production, COPY dos demais arquivos, EXPOSE 3000, CMD com node src/server.js."
         },
-        "docker_compose": {
+        "docker-compose.yml": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/docker-compose.yml",
-          "exports": [],
-          "instructions": "Crie o docker-compose.yml para orquestrar o servidor Express. Deve conter: version 3.8, services com um único serviço chamado api, build apontando para o contexto atual com ponto, container_name como express-crud-api, restart como unless-stopped, ports mapeando 3000:3000, env_file apontando para .env, volumes opcionalmente mapeando um volume para logs. Mantenha simples pois é apenas um serviço Node sem banco de dados externo."
+          "instructions": "Crie o docker-compose.yml para orquestrar o servidor Express. Deve conter: version 3.8, serviço chamado api, build apontando para contexto atual, container_name como express-crud-api, restart como unless-stopped, ports mapeando 3000:3000, env_file apontando para .env."
         },
-        "env_example": {
+        ".env.example": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/.env.example",
-          "exports": [],
-          "instructions": "Crie o arquivo .env.example com as variáveis de ambiente necessárias. Deve conter: PORT=3000 para a porta do servidor, NODE_ENV=development para o ambiente, API_KEY=sua_chave_aqui como exemplo de chave de autenticação simples opcional. Adicione comentários explicando cada variável. Este arquivo serve de template e não deve conter valores reais sensíveis."
+          "instructions": "Crie o .env.example com as variáveis: PORT=3000, NODE_ENV=development, API_KEY=sua_chave_aqui. Adicione comentários explicando cada variável."
         }
       }
     },
     "core": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "server": {
+        "server.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/server.js",
-          "exports": [],
-          "instructions": "Crie o arquivo principal do servidor Express. Deve importar express, cors, dotenv e as rotas de funcionarios/routes.js e ponto/routes.js. Deve conter: configuração do dotenv no início, criação da instância do express, middleware de cors, middleware de express.json para parsear body, middleware de express.urlencoded, rota base GET em '/' que retorna JSON com mensagem de boas vindas e status da API, montagem das rotas de funcionários em '/api/funcionarios', montagem das rotas de ponto em '/api/ponto', middleware de tratamento de erros com 4 parâmetros err req res next que retorna status 500 com mensagem de erro formatada, middleware para rotas não encontradas que retorna 404, inicialização do servidor com app.listen na porta definida em process.env.PORT ou 3000 com log de confirmação."
+          "instructions": "Crie o arquivo principal do servidor Express. Deve importar express, cors, dotenv e as rotas de funcionarios/routes.js e ponto/routes.js. Deve conter: configuração do dotenv no início, instância do express, middlewares de cors e express.json, rota base GET '/' retornando boas vindas, montagem das rotas em '/api/funcionarios' e '/api/ponto', middleware de erro com 4 parâmetros retornando status 500, middleware de rota não encontrada retornando 404, app.listen na porta definida em process.env.PORT ou 3000."
         },
-        "database": {
+        "database.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/database.js",
-          "exports": [],
-          "instructions": "Crie o módulo de banco de dados em memória que simula persistência durante a execução. Deve conter: array funcionarios iniciado com 3 funcionários de exemplo cada um com campos id gerado por uuid, nome, cargo, salario como número, departamento, dataAdmissao como string ISO, ativo como boolean true, array registrosPonto iniciado vazio onde cada registro terá id, funcionarioId, tipo como 'entrada' ou 'saida', timestamp como string ISO, observacao como string opcional, função getFuncionarios() que retorna cópia do array, função getFuncionarioPorId(id) que busca pelo id, função adicionarFuncionario(dados) que cria novo funcionário com id uuid e retorna o criado, função atualizarFuncionario(id, dados) que atualiza campos e retorna o atualizado ou null, função deletarFuncionario(id) que marca ativo como false em vez de deletar fisicamente e retorna boolean, função getRegistrosPonto(funcionarioId) que filtra registros pelo funcionarioId, função adicionarRegistroPonto(dados) que cria novo registro com id uuid e timestamp atual. Exporte todas as funções."
+          "instructions": "Crie o módulo de banco de dados em memória. Deve conter: array funcionarios com 3 funcionários de exemplo com campos id, nome, cargo, salario, departamento, dataAdmissao, ativo true, array registrosPonto vazio onde cada registro terá id, funcionarioId, tipo como 'entrada' ou 'saida', timestamp e observacao, função getFuncionarios(), função getFuncionarioPorId(id), função adicionarFuncionario(dados), função atualizarFuncionario(id, dados), função deletarFuncionario(id) que faz soft delete, função getRegistrosPonto(funcionarioId), função adicionarRegistroPonto(dados)."
         },
-        "middlewares": {
+        "middlewares.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/middlewares.js",
-          "exports": [],
-          "instructions": "Crie middlewares reutilizáveis para a API. Deve conter: função validarFuncionario(req, res, next) que valida o body da requisição verificando se nome é string não vazia, cargo é string não vazia, salario é número positivo, departamento é string não vazia e chama next() se válido ou retorna status 400 com objeto de erros detalhando quais campos são inválidos, função validarRegistroPonto(req, res, next) que valida se funcionarioId está presente e se tipo é exatamente 'entrada' ou 'saida', função logRequisicao(req, res, next) que imprime no console o método HTTP a rota e o timestamp de cada requisição recebida e chama next(), função tratarIdInexistente(resultado, res) que é uma função auxiliar não middleware que verifica se resultado é null e retorna 404 automaticamente ou retorna false para continuar. Exporte validarFuncionario, validarRegistroPonto, logRequisicao, tratarIdInexistente."
+          "instructions": "Crie middlewares reutilizáveis. Deve conter: função validarFuncionario(req, res, next) que valida nome, cargo, salario positivo e departamento retornando 400 com erros detalhados se inválido, função validarRegistroPonto(req, res, next) que valida funcionarioId e tipo como 'entrada' ou 'saida', função logRequisicao(req, res, next) que imprime método, rota e timestamp no console, função auxiliar tratarIdInexistente(resultado, res) que retorna 404 se resultado for null."
         }
       }
     },
     "funcionarios": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "controller": {
+        "controller.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/funcionarios/controller.js",
-          "exports": [],
-          "instructions": "Crie o controller com a lógica de negócio para funcionários. Deve importar todas as funções necessárias de database.js e tratarIdInexistente de middlewares.js. Deve conter: função listar(req, res) que retorna todos os funcionários ativos com status 200, aceita query param ?departamento para filtrar por departamento e ?cargo para filtrar por cargo, função buscarPorId(req, res) que busca pelo req.params.id e retorna 404 se não encontrar, função criar(req, res) que chama adicionarFuncionario com o body e retorna status 201 com o funcionário criado, função atualizar(req, res) que chama atualizarFuncionario com id e body e retorna 404 se não encontrar ou 200 com o atualizado, função desativar(req, res) que chama deletarFuncionario que faz soft delete e retorna 200 com mensagem de confirmação ou 404, função obterResumo(req, res) que retorna objeto com total de funcionários ativos, média de salários, contagem por departamento e contagem por cargo. Exporte todas as funções."
+          "instructions": "Crie o controller de funcionários. Deve conter: função listar(req, res) retornando ativos com filtros opcionais por ?departamento e ?cargo, função buscarPorId(req, res) retornando 404 se não encontrar, função criar(req, res) retornando 201 com o criado, função atualizar(req, res) retornando 404 ou 200, função desativar(req, res) fazendo soft delete, função obterResumo(req, res) retornando total de ativos, média de salários, contagem por departamento e por cargo."
         },
-        "routes": {
+        "routes.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/funcionarios/routes.js",
-          "exports": [],
-          "instructions": "Crie o arquivo de rotas para o recurso funcionários. Deve importar Router do express, as funções do controller.js e os middlewares validarFuncionario e logRequisicao de middlewares.js. Deve definir as seguintes rotas: GET '/' com logRequisicao e controller.listar para listar todos, GET '/resumo' com logRequisicao e controller.obterResumo para estatísticas, GET '/:id' com logRequisicao e controller.buscarPorId para buscar um, POST '/' com logRequisicao e validarFuncionario e controller.criar para criar, PUT '/:id' com logRequisicao e validarFuncionario e controller.atualizar para atualizar, DELETE '/:id' com logRequisicao e controller.desativar para soft delete. Exporte o router como default."
+          "instructions": "Crie as rotas de funcionários: GET '/' listar, GET '/resumo' obterResumo, GET '/:id' buscarPorId, POST '/' com validarFuncionario e criar, PUT '/:id' com validarFuncionario e atualizar, DELETE '/:id' desativar. Todos com logRequisicao. Exporte o router como default."
         }
       }
     },
     "ponto": {
-      "status": "não iniciado",
+      "done": false,
       "sub_artifacts": {
-        "controller": {
+        "controller.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/ponto/controller.js",
-          "exports": [],
-          "instructions": "Crie o controller com a lógica de negócio para registro de ponto. Deve importar as funções necessárias de database.js. Deve conter: função registrar(req, res) que valida se o funcionário existe buscando pelo funcionarioId do body, cria o registro de ponto com tipo 'entrada' ou 'saida' e timestamp atual e retorna 201 com o registro criado, função listarPorFuncionario(req, res) que busca todos os registros pelo funcionarioId do req.params e retorna array ordenado por timestamp do mais recente ao mais antigo, função obterRelatorioDiario(req, res) que aceita query param ?data no formato YYYY-MM-DD e retorna todos os registros daquele dia de todos os funcionários agrupados por funcionário mostrando entradas e saídas, função calcularHorasTrabalhadas(req, res) que aceita params funcionarioId e query params dataInicio e dataFim no formato YYYY-MM-DD e calcula o total de horas trabalhadas no período pareando entradas com saídas. Exporte todas as funções."
+          "instructions": "Crie o controller de ponto. Deve conter: função registrar(req, res) que valida se funcionário existe e cria registro retornando 201, função listarPorFuncionario(req, res) retornando registros ordenados por timestamp do mais recente, função obterRelatorioDiario(req, res) aceitando ?data no formato YYYY-MM-DD retornando registros do dia agrupados por funcionário, função calcularHorasTrabalhadas(req, res) aceitando funcionarioId e query params dataInicio e dataFim calculando total de horas pareando entradas com saídas."
         },
-        "routes": {
+        "routes.js": {
           "done": false,
-          "attempts": 0,
           "file": "express-crud/src/ponto/routes.js",
-          "exports": [],
-          "instructions": "Crie o arquivo de rotas para o recurso ponto. Deve importar Router do express, as funções do controller.js e os middlewares validarRegistroPonto e logRequisicao de middlewares.js. Deve definir as seguintes rotas: POST '/' com logRequisicao e validarRegistroPonto e controller.registrar para registrar ponto, GET '/funcionario/:funcionarioId' com logRequisicao e controller.listarPorFuncionario para listar registros de um funcionário, GET '/relatorio/diario' com logRequisicao e controller.obterRelatorioDiario para relatório do dia, GET '/horas/:funcionarioId' com logRequisicao e controller.calcularHorasTrabalhadas para calcular horas trabalhadas no período. Exporte o router como default."
+          "instructions": "Crie as rotas de ponto: POST '/' com validarRegistroPonto e registrar, GET '/funcionario/:funcionarioId' listarPorFuncionario, GET '/relatorio/diario' obterRelatorioDiario, GET '/horas/:funcionarioId' calcularHorasTrabalhadas. Todos com logRequisicao. Exporte o router como default."
         }
       }
     }
