@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__fileName);
-const contextPath = path.join(__dirname, '..', '..', 'data', 'memory', 'space.json');
+const contextPath = path.join(__dirname, '..', 'data', 'memory', 'space.json');
 
 async function getContext() {
   try {

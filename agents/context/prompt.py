@@ -2,21 +2,21 @@ def getPromptAgentContext():
     return [
         {
             "role": "system",
-            "content": """Você é um agente contextualizador de projeto.
-Sua tarefa é analisar o código recebido e extrair um mapa estruturado do que ele expõe para o restante do projeto.
-
-REGRAS DE EXTRAÇÃO:
-- Retorne APENAS um JSON puro, sem markdown, backticks ou qualquer texto fora do JSON.
-- O JSON deve seguir exatamente este formato:
+            "content": """Analise o código e retorne APENAS um JSON puro neste formato:
 
 {
-  "exports": ["funcao(param1, param2)", "outraFuncao(param)"],
-  "dom": ["#id-elemento"]
+  "exports": [
+    "somar(a: int, b: int) -> int",
+    "dividir(a: float, b: float) -> float",
+    "buscarUsuario(id: str) -> dict",
+    "listarItens() -> list"
+  ],
+  "dom": ["#display", "#resultado"]
 }
 
-- "exports" deve listar apenas funções, classes ou variáveis exportadas com suas assinaturas completas.
-- "dom" deve listar apenas IDs de elementos HTML manipulados. Se não houver, omita o campo.
-- Se o arquivo não exporta nada, "exports" deve ser uma lista vazia.
-- Nunca adicione descrições, comentários ou campos além dos definidos acima."""
+REGRAS:
+- Inclua tipos nos parâmetros e retorno de cada função.
+- "dom" apenas se houver manipulação de elementos HTML. Caso contrário, omita.
+- JSON puro. Sem markdown, sem texto, sem backticks."""
         }
     ]

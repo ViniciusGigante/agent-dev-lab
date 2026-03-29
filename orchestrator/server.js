@@ -33,7 +33,6 @@ async function main() {
         if (task) {
             const context = await getContext();
             const codeResponse = await fetchCoder(task, context);
-            console.log('codeResponse type:', typeof codeResponse);
             const analyzedResponse = await fetchReviewer(codeResponse, task);
 
             const { isApproved, code } = normalizeAgentResponse(analyzedResponse);
@@ -41,7 +40,6 @@ async function main() {
 
             try {
                 const contextData = await fetchContext(resultCode);
-                console.log('contextData:', JSON.stringify(contextData));
                 await saveContext(task.file, contextData);
                 await saveCode(resultCode, task.file);
                 await completeTask(task, path.join(basePath, 'state.json'));

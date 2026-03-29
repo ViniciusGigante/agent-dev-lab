@@ -1,9 +1,3 @@
 **/.env
-.env.example
 .env
 docs
-teste.js
-/data/*
-!/data/.gitkeep
-writeLog.js
-!/data/memory/
